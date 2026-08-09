@@ -6,7 +6,18 @@ import { AppProvider } from "@shopify/shopify-app-react-router/react";
 import { authenticate } from "../shopify.server";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  await authenticate.admin(request);
+  try {
+    await authenticate.admin(request);
+  } catch (e: any) {
+    // Log detailed error so it appears in Vercel function logs
+    console.error("=== authenticate.admin FAILED ===");
+    console.error("Message:", e?.message);
+    console.error("Stack:", e?.stack);
+    console.error("SHOPIFY_API_KEY set:", !!process.env.SHOPIFY_API_KEY);
+    console.error("SHOPIFY_API_SECRET set:", !!process.env.SHOPIFY_API_SECRET);
+    console.error("SHOPIFY_APP_URL:", process.env.SHOPIFY_APP_URL);
+    throw e;
+  }
 
   // eslint-disable-next-line no-undef
   return { apiKey: process.env.SHOPIFY_API_KEY || "0859f7f7217d0f7402f7201130710a40" };
@@ -27,7 +38,11 @@ export default function App() {
 
 // Shopify needs React Router to catch some thrown responses, so that their headers are included in the response.
 export function ErrorBoundary() {
-  return boundary.error(useRouteError());
+  const error = useRouteError();
+  // Show error details for debugging (remove in production)
+  const msg = error instanceof Error ? error.message : String(error);
+  console.error("ErrorBoundary caught:", msg);
+  return boundary.error(error);
 }
 
 export const headers: HeadersFunction = (headersArgs) => {
