@@ -81,7 +81,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     orderBy: [{ priority: "desc" }, { createdAt: "desc" }],
   });
 
-  return { rules, apiKey: process.env.SHOPIFY_API_KEY || "", shop: session.shop };
+  return { rules, apiKey: process.env.SHOPIFY_API_KEY || "0859f7f7217d0f7402f7201130710a40", shop: session.shop };
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {

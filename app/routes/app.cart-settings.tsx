@@ -21,7 +21,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
   return {
     settings,
-    apiKey: process.env.SHOPIFY_API_KEY || "",
+    apiKey: process.env.SHOPIFY_API_KEY || "0859f7f7217d0f7402f7201130710a40",
     shop: session.shop,
   };
 };
