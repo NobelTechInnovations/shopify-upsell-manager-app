@@ -23,7 +23,7 @@ prefix = "apps"
 
 [auth]
 redirect_urls = [
-  "https://upsell-manager.vercel.app/api/auth",
-  "https://upsell-manager.vercel.app/api/auth/callback"
+  "https://upsell-manager.vercel.app/auth/callback",
+  "https://upsell-manager.vercel.app/auth/session/token"
 ]
 

@@ -6,18 +6,7 @@ import { AppProvider } from "@shopify/shopify-app-react-router/react";
 import { authenticate } from "../shopify.server";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  try {
-    await authenticate.admin(request);
-  } catch (e: any) {
-    // Log detailed error so it appears in Vercel function logs
-    console.error("=== authenticate.admin FAILED ===");
-    console.error("Message:", e?.message);
-    console.error("Stack:", e?.stack);
-    console.error("SHOPIFY_API_KEY set:", !!process.env.SHOPIFY_API_KEY);
-    console.error("SHOPIFY_API_SECRET set:", !!process.env.SHOPIFY_API_SECRET);
-    console.error("SHOPIFY_APP_URL:", process.env.SHOPIFY_APP_URL);
-    throw e;
-  }
+  await authenticate.admin(request);
 
   // eslint-disable-next-line no-undef
   return { apiKey: process.env.SHOPIFY_API_KEY || "0859f7f7217d0f7402f7201130710a40" };

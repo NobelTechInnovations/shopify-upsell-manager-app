@@ -1,5 +1,6 @@
 import type { LoaderFunctionArgs } from "react-router";
 import prisma from "../db.server";
+import { PrismaClient } from "@prisma/client";
 
 // Debug endpoint — hit https://upsell-manager.vercel.app/api/debug to diagnose
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -15,20 +16,40 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         : "MISSING",
       SCOPES: process.env.SCOPES || "MISSING",
     },
-    db: { status: "untested", error: null as any },
+    db_direct: { status: "untested", error: null as any },
+    db_pooler: { status: "untested", error: null as any },
   };
 
-  // Test DB connection
+  // Test current DATABASE_URL connection
   try {
     await prisma.$connect();
     const sessionCount = await prisma.session.count();
-    checks.db = { status: "OK", session_count: sessionCount };
+    checks.db_direct = { status: "OK", session_count: sessionCount };
   } catch (e: any) {
-    checks.db = { status: "ERROR", error: e.message };
+    checks.db_direct = { status: "ERROR", error: e.message };
   }
+
+  // Test Supabase pooler connections across regions
+  const regions = ["ap-south-1", "us-east-1", "eu-west-1", "ap-southeast-1"];
+  const poolerResults: Record<string, any> = {};
+
+  for (const region of regions) {
+    const poolerUrl = `postgresql://postgres.uglvjhkoqhftrffcrluy:shopify-upsell-manager@aws-0-${region}.pooler.supabase.com:6543/postgres?connection_limit=1`;
+    const client = new PrismaClient({ datasources: { db: { url: poolerUrl } } });
+    try {
+      await client.$connect();
+      await client.$queryRaw`SELECT 1`;
+      poolerResults[region] = "OK ✅";
+      await client.$disconnect();
+    } catch (e: any) {
+      poolerResults[region] = `ERROR: ${e.message.split("\n")[0]}`;
+    }
+  }
+  checks.db_pooler = poolerResults;
 
   return new Response(JSON.stringify(checks, null, 2), {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
 };
+
