@@ -9,19 +9,19 @@ import { setAbstractRuntimeString } from "@shopify/shopify-api/runtime";
 
 setAbstractRuntimeString(() => "React Router (Node)");
 
-const appUrl = process.env.SHOPIFY_APP_URL || process.env.HOST || "https://upsell-manager.vercel.app";
-const apiKey = process.env.SHOPIFY_API_KEY || "0859f7f7217d0f7402f7201130710a40";
-const apiSecretKey = process.env.SHOPIFY_API_SECRET || "";
+const appUrl = process.env.SHOPIFY_APP_URL || process.env.HOST;
+const apiKey = process.env.SHOPIFY_API_KEY;
+const apiSecretKey = process.env.SHOPIFY_API_SECRET;
 const scopes = process.env.SCOPES
   ? process.env.SCOPES.split(",")
   : ["write_script_tags", "read_script_tags", "write_products", "read_products"];
 
 const shopify = shopifyApp({
-  apiKey,
-  apiSecretKey,
+  apiKey: apiKey!,
+  apiSecretKey: apiSecretKey!,
   apiVersion: ApiVersion.July26,
   scopes,
-  appUrl,
+  appUrl: appUrl!,
   authPathPrefix: "/auth",
   sessionStorage: new PrismaSessionStorage(prisma),
   distribution: AppDistribution.AppStore,
