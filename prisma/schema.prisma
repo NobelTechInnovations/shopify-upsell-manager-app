@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Note that some adapters may set a maximum length for the String type by default, please ensure your strings are long
+// enough when changing adapters.
+// See https://www.prisma.io/docs/orm/reference/prisma-schema-reference#string for more information
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.sqlite"
+}
+
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean   @default(false)
+  locale        String?
+  collaborator  Boolean?  @default(false)
+  emailVerified Boolean?  @default(false)
+  refreshToken        String?
+  refreshTokenExpires DateTime?
+}
+
+model UpsellRule {
+  id            String   @id @default(cuid())
+  shop          String
+  name          String
+  ruleType      RuleType
+  targetId      String?
+  targetTitle   String?
+  priority      Int      @default(0)
+  maxProducts   Int      @default(3)
+  enabled       Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  products      UpsellRuleProduct[]
+  @@index([shop])
+  @@index([shop, ruleType])
+}
+
+model UpsellRuleProduct {
+  id           String     @id @default(cuid())
+  ruleId       String
+  productId    String
+  productTitle String?
+  productImage String?
+  price        String?
+  variantId    String?
+  sortOrder    Int        @default(0)
+  rule         UpsellRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+  @@unique([ruleId, productId])
+  @@index([ruleId])
+}
+
+model CartSettings {
+  id                    String   @id @default(cuid())
+  shop                  String   @unique
+  // Master mode toggle
+  cartReplacementEnabled Boolean @default(false)
+  // Header
+  headerTitle           String   @default("Your Cart")
+  headerBg              String   @default("#ffffff")
+  headerTextColor       String   @default("#1a1a1a")
+  // Cart body / overlay
+  bodyBg                String   @default("#ffffff")
+  bodyTextColor         String   @default("#1a1a1a")
+  borderColor           String   @default("#e5e7eb")
+  borderRadius          Int      @default(12)
+  overlayBg             String   @default("rgba(0,0,0,0.5)")
+  // Quantity stepper
+  qtyBtnBg              String   @default("#f3f4f6")
+  qtyBtnText            String   @default("#1a1a1a")
+  // Checkout button
+  btnBg                 String   @default("#1a1a1a")
+  btnText               String   @default("#ffffff")
+  btnRadius             Int      @default(6)
+  checkoutBtnText       String   @default("Checkout")
+  // Upsell section
+  upsellEnabled         Boolean  @default(true)
+  upsellTitle           String   @default("You might also like")
+  upsellBg              String   @default("#f9fafb")
+  upsellBtnBg           String   @default("#1a1a1a")
+  upsellBtnText         String   @default("#ffffff")
+  upsellBtnRadius       Int      @default(4)
+  // Free shipping bar
+  freeShippingEnabled   Boolean  @default(false)
+  freeShippingThreshold Int      @default(5000)
+  freeShippingText      String   @default("Free shipping on orders over $50!")
+  freeShippingBarBg     String   @default("#e5e7eb")
+  freeShippingBarFill   String   @default("#22c55e")
+  // Typography
+  fontFamily            String   @default("inherit")
+  fontSize              Int      @default(14)
+  updatedAt             DateTime @updatedAt
+}
+
+enum RuleType {
+  GLOBAL
+  COLLECTION
+  PRODUCT
+}

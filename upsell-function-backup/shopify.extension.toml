@@ -1,0 +1,8 @@
+name = "upsell-function"
+type = "function"
+api_version = "2026-01"
+
+[[extensions.targeting]]
+target = "cart.transform.run"
+input_query = "src/cart_transform_run.graphql"
+export = "cart_transform_run"

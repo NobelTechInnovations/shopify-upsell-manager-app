@@ -1,0 +1,42 @@
+#graphql
+query CartTransformInput {
+  cart {
+    lines {
+      id
+      quantity
+      merchandise {
+        ... on ProductVariant {
+          id
+          product {
+            id
+            collections(first: 10) {
+              edges {
+                node {
+                  handle
+                }
+              }
+            }
+          }
+        }
+      }
+      attributes {
+        key
+        value
+      }
+    }
+    attributes {
+      key
+      value
+    }
+  }
+  shop {
+    metafields(first: 10, namespace: "upsell", keys: ["rules"]) {
+      edges {
+        node {
+          key
+          value
+        }
+      }
+    }
+  }
+}

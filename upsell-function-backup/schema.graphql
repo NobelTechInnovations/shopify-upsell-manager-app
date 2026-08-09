@@ -1,0 +1,29 @@
+type UpsellRule {
+  id: ID!
+  shop: String!
+  name: String!
+  ruleType: RuleType!
+  targetId: String
+  priority: Int!
+  maxProducts: Int!
+  enabled: Boolean!
+  products: [UpsellRuleProduct!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type UpsellRuleProduct {
+  id: ID!
+  productId: String!
+  sortOrder: Int!
+}
+
+enum RuleType {
+  GLOBAL
+  COLLECTION
+  PRODUCT
+}
+
+extend type Query {
+  upsellRules(shop: String!): [UpsellRule!]! @function(name: "upsell-rules")
+}

@@ -1,0 +1,142 @@
+import { CartTransformFunction } from "@shopify/function";
+
+interface UpsellRule {
+  id: string;
+  shop: string;
+  name: string;
+  ruleType: "GLOBAL" | "COLLECTION" | "PRODUCT";
+  targetId: string | null;
+  priority: number;
+  maxProducts: number;
+  enabled: boolean;
+  products: { productId: string; sortOrder: number }[];
+}
+
+interface CartLine {
+  id: string;
+  merchandise: {
+    id: string;
+    product: {
+      id: string;
+      collections: { edges: { node: { handle: string } }[] };
+    };
+  };
+  quantity: number;
+  attributes: { key: string; value: string }[];
+}
+
+interface ShopMetafield {
+  key: string;
+  value: string;
+}
+
+interface CartTransformInput {
+  cart: {
+    lines: CartLine[];
+    attributes: { key: string; value: string }[];
+  };
+  shop: {
+    metafields: {
+      edges: { node: ShopMetafield }[];
+    };
+  };
+}
+
+interface CartTransformResult {
+  operations: Array<{
+    expand: {
+      cartLineId: string;
+      expandedCartItems: Array<{
+        merchandiseId: string;
+        quantity: number;
+        attributes: { key: string; value: string }[];
+        price: { amount: { amount: number; currencyCode: string } } | null;
+      }>;
+    };
+  }>;
+}
+
+function parseRules(value: string): UpsellRule[] {
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+export const run: CartTransformFunction<CartTransformInput, CartTransformResult> = (input) => {
+  const { cart, shop } = input;
+  
+  const rulesMetafield = shop.metafields.edges.find(
+    (edge) => edge.node.key === "rules"
+  );
+  
+  const rules = rulesMetafield ? parseRules(rulesMetafield.node.value) : [];
+  
+  if (rules.length === 0) {
+    return { operations: [] };
+  }
+
+  const enabledRules = rules
+    .filter(rule => rule.enabled)
+    .sort((a, b) => b.priority - a.priority);
+
+  const operations = [];
+
+  for (const line of cart.lines) {
+    const productId = line.merchandise.product.id;
+    const productHandle = productId.split("/").pop() || "";
+    
+    for (const rule of enabledRules) {
+      let shouldApply = false;
+
+      switch (rule.ruleType) {
+        case "GLOBAL":
+          shouldApply = true;
+          break;
+        case "COLLECTION":
+          if (rule.targetId) {
+            const hasCollection = line.merchandise.product.collections?.edges?.some(
+              (edge) => edge.node.handle === rule.targetId
+            );
+            shouldApply = !!hasCollection;
+          }
+          break;
+        case "PRODUCT":
+          if (rule.targetId) {
+            shouldApply = productHandle === rule.targetId;
+          }
+          break;
+      }
+
+      if (shouldApply) {
+        const upsellProducts = rule.products
+          .sort((a, b) => a.sortOrder - b.sortOrder)
+          .slice(0, rule.maxProducts)
+          .map(p => p.productId);
+
+        if (upsellProducts.length > 0) {
+          operations.push({
+            expand: {
+              cartLineId: line.id,
+              expandedCartItems: upsellProducts.map((merchandiseId, index) => ({
+                merchandiseId,
+                quantity: line.quantity,
+                attributes: [
+                  { key: "_upsell_rule_id", value: rule.id },
+                  { key: "_upsell_sort_order", value: index.toString() },
+                  { key: "_upsell_original_line_id", value: line.id },
+                ],
+                price: null,
+              })),
+            },
+          });
+        }
+        break;
+      }
+    }
+  }
+
+  return { operations };
+};
