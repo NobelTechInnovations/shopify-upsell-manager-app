@@ -2,6 +2,8 @@
 
 This code solves the **hiding & flickering issue** when clicking "+ ADD" and uses **native theme CSS variables** (`rgb(var(--color-background))`, `rgb(var(--color-foreground))`, theme fonts & colors) so it matches your Dawn / Shopify theme 100%.
 
+URL - https://upsell-manager.vercel.app/api/auth?shop=STORE-NAME.myshopify.com
+
 ---
 
 ## 📋 Complete Code for `snippets/cart-drawer-upsell.liquid`
