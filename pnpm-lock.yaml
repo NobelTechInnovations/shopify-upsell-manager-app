@@ -27,8 +27,8 @@ importers:
         specifier: ^3.7.11
         version: 3.7.11
       '@shopify/app-bridge-react':
-        specifier: ^4.2.4
-        version: 4.2.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^4.2.13
+        version: 4.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@shopify/cli':
         specifier: 4.6.1
         version: 4.6.1
@@ -42,8 +42,8 @@ importers:
         specifier: ^3.22.1
         version: 3.22.1
       isbot:
-        specifier: ^5.1.31
-        version: 5.2.1
+        specifier: ^5.2.2
+        version: 5.2.2
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1400,8 +1400,8 @@ packages:
   '@shopify/app-bridge-core@1.5.0':
     resolution: {integrity: sha512-bMbiGTivxS8hY86eLUe9xdO+BsZPkMZDPXiGmGYfnvXnInr01w9w/UcD02oU4zbA49GO09aCYYcJlo7pQu6VBA==}
 
-  '@shopify/app-bridge-react@4.2.12':
-    resolution: {integrity: sha512-7youUp0rF6fvbRQ0qT5qD/yHRTXnFSo0gHyZixcfJWM/KocefWMjjLIWAxcaJW7DVHWpq6bGZqC7s5XS3avTKw==}
+  '@shopify/app-bridge-react@4.2.13':
+    resolution: {integrity: sha512-9ArXhCNRefHZwVwu/DNll1FOQPiKwPhlGs9IwE9FWw39osG+e0SNImczW4B0WF1b92sdRsTgmFkqp3Vvmi3ARg==}
     peerDependencies:
       react: '*'
       react-dom: '*'
@@ -2850,8 +2850,8 @@ packages:
   isarray@2.0.5:
     resolution: {integrity: sha512-xHjhDr3cNBK0BzdUJSPXZntQUx/mwMS5Rw4A7lPJ90XGAO6ISP/ePDNuo0vhqOZU+UD5JoodwCAAoZQd3FeAKw==}
 
-  isbot@5.2.1:
-    resolution: {integrity: sha512-dJ+LpKyClQZ7NG+j3OensC/mAZkGpukE9YUrgPYvAZj2doVL0edfDgywTUh5CXa0o+nW9a1V9e5+CJTX8+SxRw==}
+  isbot@5.2.2:
+    resolution: {integrity: sha512-iQcBXcd+Rv/pkubRyGh2utW2j1oPG5hZY6TUhVPpqK4G+o3IbxpJNx04hgksjc/N7GK5pEorUxDeg31cFgEk/w==}
     engines: {node: '>=18'}
 
   isexe@2.0.0:
@@ -5195,7 +5195,7 @@ snapshots:
       dedent: 1.7.2
       es-module-lexer: 1.7.0
       exit-hook: 2.2.1
-      isbot: 5.2.1
+      isbot: 5.2.2
       jsesc: 3.0.2
       lodash: 4.18.1
       p-map: 7.0.6
@@ -5373,7 +5373,7 @@ snapshots:
 
   '@shopify/app-bridge-core@1.5.0': {}
 
-  '@shopify/app-bridge-react@4.2.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@shopify/app-bridge-react@4.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@shopify/app-bridge-types': 0.7.2
       react: 18.3.1
@@ -5415,7 +5415,7 @@ snapshots:
       '@shopify/graphql-client': 1.4.2
       '@shopify/storefront-api-client': 1.0.10
       compare-versions: 6.1.1
-      isbot: 5.2.1
+      isbot: 5.2.2
       jose: 5.10.0
       lossless-json: 4.3.1
       tslib: 2.8.1
@@ -5427,7 +5427,7 @@ snapshots:
       '@shopify/shopify-app-session-storage': 5.0.1(@shopify/shopify-api@13.1.0)
       '@shopify/storefront-api-client': 1.0.10
       compare-versions: 6.1.1
-      isbot: 5.2.1
+      isbot: 5.2.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router: 7.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -7114,7 +7114,7 @@ snapshots:
 
   isarray@2.0.5: {}
 
-  isbot@5.2.1: {}
+  isbot@5.2.2: {}
 
   isexe@2.0.0: {}
 
