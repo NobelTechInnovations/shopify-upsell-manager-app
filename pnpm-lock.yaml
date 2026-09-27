@@ -27,8 +27,8 @@ importers:
         specifier: ^3.7.11
         version: 3.7.11
       '@shopify/app-bridge-react':
-        specifier: ^4.2.4
-        version: 4.2.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^4.2.13
+        version: 4.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@shopify/cli':
         specifier: 4.6.1
         version: 4.6.1
@@ -39,11 +39,11 @@ importers:
         specifier: ^9.0.0
         version: 9.0.1(@prisma/client@6.19.3(prisma@6.19.3(typescript@5.9.3))(typescript@5.9.3))(@shopify/shopify-api@13.1.0)(@shopify/shopify-app-session-storage@5.0.1(@shopify/shopify-api@13.1.0))(prisma@6.19.3(typescript@5.9.3))
       effect:
-        specifier: ^3.22.1
-        version: 3.22.1
+        specifier: ^3.22.2
+        version: 3.22.2
       isbot:
-        specifier: ^5.1.31
-        version: 5.2.1
+        specifier: ^5.2.2
+        version: 5.2.2
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -1400,8 +1400,8 @@ packages:
   '@shopify/app-bridge-core@1.5.0':
     resolution: {integrity: sha512-bMbiGTivxS8hY86eLUe9xdO+BsZPkMZDPXiGmGYfnvXnInr01w9w/UcD02oU4zbA49GO09aCYYcJlo7pQu6VBA==}
 
-  '@shopify/app-bridge-react@4.2.12':
-    resolution: {integrity: sha512-7youUp0rF6fvbRQ0qT5qD/yHRTXnFSo0gHyZixcfJWM/KocefWMjjLIWAxcaJW7DVHWpq6bGZqC7s5XS3avTKw==}
+  '@shopify/app-bridge-react@4.2.13':
+    resolution: {integrity: sha512-9ArXhCNRefHZwVwu/DNll1FOQPiKwPhlGs9IwE9FWw39osG+e0SNImczW4B0WF1b92sdRsTgmFkqp3Vvmi3ARg==}
     peerDependencies:
       react: '*'
       react-dom: '*'
@@ -2189,8 +2189,8 @@ packages:
   effect@3.21.0:
     resolution: {integrity: sha512-PPN80qRokCd1f015IANNhrwOnLO7GrrMQfk4/lnZRE/8j7UPWrNNjPV0uBrZutI/nHzernbW+J0hdqQysHiSnQ==}
 
-  effect@3.22.1:
-    resolution: {integrity: sha512-TNoXushmPOBAjJlthF5d2QwnX2xBPEtcNJr5XKNKbRLbDvBcOYkXlYDfvGfSA0zriwLFuCll5MDtNMAdZL17PQ==}
+  effect@3.22.2:
+    resolution: {integrity: sha512-fm1CQXCs7GTMwpadZxwU5rnAb2bN6mbQpknq/pXBGCzSKkosNYb9k0wsoL0TfB10rSa5xOEZJjo77u/KLXSANg==}
 
   electron-to-chromium@1.5.402:
     resolution: {integrity: sha512-/oOpMaPT6Yg+6/1XQhyIPlzgj7Ye9zf+nNM2Uh6OcE2G2oNptWazFa+qB2Pdqqbsc9KnIDzgAntoYN0dbwOXwA==}
@@ -2852,6 +2852,10 @@ packages:
 
   isbot@5.2.1:
     resolution: {integrity: sha512-dJ+LpKyClQZ7NG+j3OensC/mAZkGpukE9YUrgPYvAZj2doVL0edfDgywTUh5CXa0o+nW9a1V9e5+CJTX8+SxRw==}
+    engines: {node: '>=18'}
+
+  isbot@5.2.2:
+    resolution: {integrity: sha512-iQcBXcd+Rv/pkubRyGh2utW2j1oPG5hZY6TUhVPpqK4G+o3IbxpJNx04hgksjc/N7GK5pEorUxDeg31cFgEk/w==}
     engines: {node: '>=18'}
 
   isexe@2.0.0:
@@ -5195,7 +5199,7 @@ snapshots:
       dedent: 1.7.2
       es-module-lexer: 1.7.0
       exit-hook: 2.2.1
-      isbot: 5.2.1
+      isbot: 5.2.2
       jsesc: 3.0.2
       lodash: 4.18.1
       p-map: 7.0.6
@@ -5373,7 +5377,7 @@ snapshots:
 
   '@shopify/app-bridge-core@1.5.0': {}
 
-  '@shopify/app-bridge-react@4.2.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@shopify/app-bridge-react@4.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@shopify/app-bridge-types': 0.7.2
       react: 18.3.1
@@ -5427,7 +5431,7 @@ snapshots:
       '@shopify/shopify-app-session-storage': 5.0.1(@shopify/shopify-api@13.1.0)
       '@shopify/storefront-api-client': 1.0.10
       compare-versions: 6.1.1
-      isbot: 5.2.1
+      isbot: 5.2.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router: 7.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -6193,7 +6197,7 @@ snapshots:
       '@standard-schema/spec': 1.1.0
       fast-check: 3.23.2
 
-  effect@3.22.1:
+  effect@3.22.2:
     dependencies:
       '@standard-schema/spec': 1.1.0
       fast-check: 3.23.2
@@ -7115,6 +7119,8 @@ snapshots:
   isarray@2.0.5: {}
 
   isbot@5.2.1: {}
+
+  isbot@5.2.2: {}
 
   isexe@2.0.0: {}
 
